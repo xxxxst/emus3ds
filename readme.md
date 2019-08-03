@@ -1,5 +1,15 @@
 # Emus for 3DS 
 
+# change
+- support simple chinese directory
+
+- 支持简体中文目录名
+
+# use
+- copy `emus/` directory to 3ds machine sd cart `/3ds/`.
+
+- 复制 `emus/` 文件夹到3ds sd卡目录 `/3ds/`.
+
 ## VirtuaNES core
 
 VirtuaNES a high compatibility NES emulator for your old 3DS or 2DS. It's not as accurate as FCEUX or Nestopia, but it runs at full 60 FPS for almost all games, and supports tonnes of mappers: MMC1,3,5,6; VRC1,2,3,4,6,7; and tonnes of other mappers. As a result, the library of games it supports are huge. 

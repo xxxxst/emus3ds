@@ -142,15 +142,15 @@ SMenuItem optionsForSpriteFlicker[] =
 };
 
 SMenuItem optionMenu[] = {
-    MENU_MAKE_HEADER1   ("GLOBAL SETTINGS"),
-    MENU_MAKE_PICKER    (11000, "  Screen Stretch", "How would you like the final screen to appear?", optionsForStretch, DIALOGCOLOR_CYAN),
-    MENU_MAKE_PICKER    (18000, "  Font", "The font used for the user interface.", optionsForFont, DIALOGCOLOR_CYAN),
+    MENU_MAKE_HEADER1   ("全局设置"),
+    MENU_MAKE_PICKER    (11000, "  屏幕比例", "你希望最后的屏幕如何显示?", optionsForStretch, DIALOGCOLOR_CYAN),
+    MENU_MAKE_PICKER    (18000, "  字体", "用于用户界面的字体.", optionsForFont, DIALOGCOLOR_CYAN),
     MENU_MAKE_CHECKBOX  (15001, "  Hide text in bottom screen", 0),
     MENU_MAKE_DISABLED  (""),
     MENU_MAKE_CHECKBOX  (21000, "  Automatically save state on exit and load state on start", 0),
     MENU_MAKE_DISABLED  (""),
-    MENU_MAKE_HEADER1   ("GAME-SPECIFIC SETTINGS"),
-    MENU_MAKE_PICKER    (10000, "  Frameskip", "Try changing this if the game runs slow. Skipping frames help it run faster but less smooth.", optionsForFrameskip, DIALOGCOLOR_CYAN),
+    MENU_MAKE_HEADER1   ("游戏设置"),
+    MENU_MAKE_PICKER    (10000, "  跳帧", "跳帧可以加快游戏速度，但不那么流畅.", optionsForFrameskip, DIALOGCOLOR_CYAN),
     MENU_MAKE_PICKER    (12000, "  Framerate", "Some games run at 50 or 60 FPS by default. Override if required.", optionsForFrameRate, DIALOGCOLOR_CYAN),
     MENU_MAKE_PICKER    (19000, "  Flickering Sprites", "Sprites on real hardware flicker. You can disable for better visuals.", optionsForSpriteFlicker, DIALOGCOLOR_CYAN),
     MENU_MAKE_DISABLED  (""),
@@ -247,30 +247,30 @@ SMenuItem optionsForDisk[] =
 // marked 'do not modify'.
 //-------------------------------------------------------
 SMenuItem emulatorMenu[] = {
-    MENU_MAKE_HEADER2   ("Emulator"),               // Do not modify
-    MENU_MAKE_ACTION    (1000, "  Resume Game"),    // Do not modify
-    MENU_MAKE_PICKER2   (30000,"  Choose Disk", "", optionsForDisk, DIALOGCOLOR_CYAN),
+    MENU_MAKE_HEADER2   ("模拟器"),               // Do not modify
+    MENU_MAKE_ACTION    (1000, "  返回游戏"),    // Do not modify
+    MENU_MAKE_PICKER2   (30000,"  选择磁盘", "", optionsForDisk, DIALOGCOLOR_CYAN),
     MENU_MAKE_HEADER2   (""),
 
-    MENU_MAKE_HEADER2   ("Savestates"),
-    MENU_MAKE_ACTION    (2001, "  Save Slot #1"),   // Do not modify
-    MENU_MAKE_ACTION    (2002, "  Save Slot #2"),   // Do not modify
-    MENU_MAKE_ACTION    (2003, "  Save Slot #3"),   // Do not modify
-    MENU_MAKE_ACTION    (2004, "  Save Slot #4"),   // Do not modify
-    MENU_MAKE_ACTION    (2005, "  Save Slot #5"),   // Do not modify
+    MENU_MAKE_HEADER2   ("保存状态"),
+    MENU_MAKE_ACTION    (2001, "  保存插槽 #1"),   // Do not modify
+    MENU_MAKE_ACTION    (2002, "  保存插槽 #2"),   // Do not modify
+    MENU_MAKE_ACTION    (2003, "  保存插槽 #3"),   // Do not modify
+    MENU_MAKE_ACTION    (2004, "  保存插槽 #4"),   // Do not modify
+    MENU_MAKE_ACTION    (2005, "  保存插槽 #5"),   // Do not modify
     MENU_MAKE_HEADER2   (""),   
     
-    MENU_MAKE_ACTION    (3001, "  Load Slot #1"),   // Do not modify
-    MENU_MAKE_ACTION    (3002, "  Load Slot #2"),   // Do not modify
-    MENU_MAKE_ACTION    (3003, "  Load Slot #3"),   // Do not modify
-    MENU_MAKE_ACTION    (3004, "  Load Slot #4"),   // Do not modify
-    MENU_MAKE_ACTION    (3005, "  Load Slot #5"),   // Do not modify
+    MENU_MAKE_ACTION    (3001, "  加载插槽 #1"),   // Do not modify
+    MENU_MAKE_ACTION    (3002, "  加载插槽 #2"),   // Do not modify
+    MENU_MAKE_ACTION    (3003, "  加载插槽 #3"),   // Do not modify
+    MENU_MAKE_ACTION    (3004, "  加载插槽 #4"),   // Do not modify
+    MENU_MAKE_ACTION    (3005, "  加载插槽 #5"),   // Do not modify
     MENU_MAKE_HEADER2   (""),
 
-    MENU_MAKE_HEADER2   ("Others"),                 // Do not modify
-    MENU_MAKE_ACTION    (4001, "  Take Screenshot"),// Do not modify
-    MENU_MAKE_ACTION    (5001, "  Reset Console"),  // Do not modify
-    MENU_MAKE_ACTION    (6001, "  Exit"),           // Do not modify
+    MENU_MAKE_HEADER2   ("其他"),                 // Do not modify
+    MENU_MAKE_ACTION    (4001, "  截屏"),// Do not modify
+    MENU_MAKE_ACTION    (5001, "  重置控制台"),  // Do not modify
+    MENU_MAKE_ACTION    (6001, "  退出"),           // Do not modify
     MENU_MAKE_LASTITEM  ()
     };
 

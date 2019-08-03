@@ -14,6 +14,8 @@
 #include "3dstypes.h"
 #include "3dsui.h"
 #include "3dsfont.h"
+#include "3dsgbk.h"
+#include "3dsutf8togbk.h"
 
 int foreColor = 0xffffff;
 int backColor = 0x000000;
@@ -286,6 +288,64 @@ void ui3dsDrawChar(uint16 *frameBuffer, int x, int y, int color565, uint8 c)
 
 
 //---------------------------------------------------------------
+// Draws a gbk character to the screen
+//---------------------------------------------------------------
+void ui3dsDrawGBK(uint16 *frameBuffer, int x, int y, int color565, uint16 ch) {
+	const int gbkRowStart = 0xa1;
+	const int gbkRowEnd = 0xf7;
+	const int gbkColStart = 0xa1;
+	const int gbkColEnd = 0xfe;
+	const int rowCount = (gbkRowEnd - gbkRowStart + 1);
+	const int colCount = (gbkColEnd - gbkColStart + 1);
+
+	int r = ch >> 8;
+	int c = ch & 0xff;
+
+	if(fontGBK == NULL
+		|| r < gbkRowStart || r > gbkRowEnd
+		|| c < gbkColStart || c > gbkColEnd){
+		ui3dsDrawChar(frameBuffer, x, y, color565, '?');
+		return;
+	}
+
+    // Draws a character to the screen at (x,y) 
+    // (0,0) is at the top left of the screen.
+    //
+    int wid = 12;
+    uint8 alpha;
+    //printf ("d %c (%d)\n", c, bmofs);
+
+	int idx = (r - gbkRowStart) * colCount + (c - gbkColStart);
+
+    if ((y) >= viewportY1 && (y) < viewportY2)
+    {
+        for (int x1 = 0; x1 < wid; x1++)
+        {
+            #define GETFONTBITMAP(c, x, y) fontGBK[c * 256 + x + (y+1)*16]
+
+            #define SETPIXELFROMBITMAP(y1) \
+                alpha = GETFONTBITMAP(idx,x1,y1); \
+                ui3dsSetPixelInline(frameBuffer, cx, cy + y1, \
+                alpha == MAX_ALPHA ? color565 : \
+                alpha == 0x0 ? -1 : \
+                    ui3dsApplyAlphaToColour565(color565, alpha) + \
+                    ui3dsApplyAlphaToColour565(ui3dsGetPixelInline(frameBuffer, cx, cy + y1), MAX_ALPHA - alpha));
+
+            int cx = (x + x1);
+            int cy = (y);
+            if (cx >= viewportX1 && cx < viewportX2)
+            {
+                for (int h = 0; h < fontHeight; h++)
+                {
+                    SETPIXELFROMBITMAP(h);
+                }
+            }
+        }
+    }
+}
+
+
+//---------------------------------------------------------------
 // Computes width of the string
 //---------------------------------------------------------------
 int ui3dsGetStringWidth(char *s, int startPos = 0, int endPos = 0xffff)
@@ -388,6 +448,11 @@ void ui3dsDrawRect(int x0, int y0, int x1, int y1)
 //---------------------------------------------------------------
 void ui3dsDrawStringOnly(uint16 *fb, int absoluteX, int absoluteY, int color, char *buffer, int startPos = 0, int endPos = 0xffff)
 {
+	const int gbkRowStart = 0xa1;
+	const int gbkRowEnd = 0xf7;
+	const int gbkColStart = 0xa1;
+	const int gbkColEnd = 0xfe;
+
     int x = absoluteX;
     int y = absoluteY;
 
@@ -399,10 +464,43 @@ void ui3dsDrawStringOnly(uint16 *fb, int absoluteX, int absoluteY, int color, ch
         for (int i = startPos; i <= endPos; i++)
         {
             uint8 c = buffer[i];
-            if (c == 0)
+            if (c == 0){
                 break;
-            if (c != 32)
+			}
+			
+			// check utf8 char is chinese 
+			if(fontGBK != NULL && i < endPos - 2 && (c & 0xF0) == 0xE0) {
+           		uint8 c2 = buffer[i + 1];
+           		uint8 c3 = buffer[i + 2];
+
+				uint16 chUtf8 = ((c & 0x0F) << 12)
+					| ((c2 & 0x3F) << 6)
+					| ((c3 & 0x3F));
+				uint16 chGBK = getGbkChar(chUtf8);
+
+				uint8 cg1 = (chGBK & 0xFF00) >> 8;
+				uint8 cg2 = (chGBK & 0x00FF);
+
+				if(    cg1 >= gbkRowStart && cg1 <= gbkRowEnd
+					&& cg2 >= gbkColStart && cg2 <= gbkColEnd) {
+
+					ui3dsDrawGBK(fb, x, y, color, chGBK);
+                	// ui3dsDrawChar(fb, x, y, color, '?');
+					x += 12;
+					i += 2;
+					continue;
+				}
+			}
+			
+            if (c != 32){
+				// char ch[10];
+				// sprintf(ch, "%X", c);
+                // ui3dsDrawChar(fb, x, y, color, ch[0]);
+            	// x += fontWidth[ch[0]];
+                // ui3dsDrawChar(fb, x, y, color, ch[1]);
+
                 ui3dsDrawChar(fb, x, y, color, c);
+			}
             x += fontWidth[c];
         }
     }
