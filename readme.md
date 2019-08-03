@@ -1,9 +1,9 @@
 # Emus for 3DS 
 
 # change
-- support simple chinese directory
+- support simple chinese directory, start from v1.02.1
 
-- 支持简体中文目录名
+- 支持简体中文目录名，从v1.02.1开始
 
 # use
 - copy `emus/` directory to 3ds machine sd cart `/3ds/`.
