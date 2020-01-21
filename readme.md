@@ -1,5 +1,11 @@
 # Emus for 3DS 
 
+# 大神
+有没有可能也汉化一下这个：
+- https://github.com/bubble2k16/snes9x_3ds
+
+让其也支持简体中文目录，谢谢！
+
 # change
 - support simple chinese directory, start from v1.02.1
 
